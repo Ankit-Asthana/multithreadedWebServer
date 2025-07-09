@@ -12,18 +12,18 @@ public class ServerCode {
         socket.setSoTimeout(10000);
         while (true) {
             System.out.println("Server is listening on port "+port);
-            Socket acceptedConnection = socket.accept();
+            Socket acceptedConnectionSocket = socket.accept();
             /*
                 PrintWriter is used to write from Server to Client
                 Use socket with getOutputStream() to push the data in client
              */
-            PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream(), true);
+            PrintWriter toClient = new PrintWriter(acceptedConnectionSocket.getOutputStream(), true);
             /*
                 BufferedReader is used to get the data from Client to server, in form of bytes,
                 It will comes continuously, that's why we need to use BufferedStream\
                 Use InputStreamReader and pass the socket with getInputStream() to get the data
             */
-            BufferedReader fromServer = new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream()));
+            BufferedReader fromServer = new BufferedReader(new InputStreamReader(acceptedConnectionSocket.getInputStream()));
             toClient.println("Hello from HackServer, you are hacked bitch");
 
             String messagefromClient = fromServer.readLine();
@@ -31,7 +31,7 @@ public class ServerCode {
             socket.close();
             toClient.close();
             fromServer.close();
-            acceptedConnection.close();
+            acceptedConnectionSocket.close();
         }
     }
 
